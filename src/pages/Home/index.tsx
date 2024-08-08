@@ -48,7 +48,10 @@ export function Home() {
           <span>0</span>
         </CountdownContainer>
 
-        <StartCountdownButton type="submit">
+        <StartCountdownButton
+          onClick={() => alert('Botão foi clicado')}
+          type="submit"
+        >
           <Play size={24} />
           Começar
         </StartCountdownButton>
