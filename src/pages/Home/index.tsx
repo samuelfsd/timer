@@ -31,6 +31,7 @@ interface Cycle {
   minutesAmount: number
   startDate: Date
   interruptedDate?: Date
+  finishedDate?: Date
 }
 
 export function Home() {
@@ -64,8 +65,8 @@ export function Home() {
   }
 
   function handleInterruptCycle() {
-    setCycles(
-      cycles.map((cycle) => {
+    setCycles((state) =>
+      state.map((cycle) => {
         if (cycle === activeCycle) {
           return { ...cycle, interruptedDate: new Date() }
         } else {
@@ -98,16 +99,34 @@ export function Home() {
 
     if (activeCycle) {
       interval = setInterval(() => {
-        setAmountSecondsPassed(
-          differenceInSeconds(new Date(), activeCycle.startDate),
+        const secondsDiff = differenceInSeconds(
+          new Date(),
+          activeCycle.startDate,
         )
+
+        if (secondsDiff >= totalSecondsCycle) {
+          setCycles((state) =>
+            state.map((cycle) => {
+              if (cycle === activeCycle) {
+                return { ...cycle, finishedDate: new Date() }
+              } else {
+                return cycle
+              }
+            }),
+          )
+
+          setAmountSecondsPassed(totalSecondsCycle)
+          clearInterval(interval)
+        } else {
+          setAmountSecondsPassed(secondsDiff)
+        }
       }, 1000)
     }
 
     return () => {
       clearInterval(interval)
     }
-  }, [activeCycle])
+  }, [activeCycle, totalSecondsCycle])
 
   useEffect(() => {
     if (activeCycle) {
