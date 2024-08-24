@@ -6,10 +6,20 @@ criando uma aplicação de um timer para estudos
 
 - TypeScript
 - React
-- React Router Dom
 - Styled Components
+- React Router Dom
 - Phosphor React
+- Contexts
+- Reducers
+- Immer Js
+- date fns
+- React Hook Form
+- zod
 
 ### Como rodar o projeto
 
-@TODO
+```bash
+npm i
+# and
+npm run dev
+```
